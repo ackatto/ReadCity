@@ -11,3 +11,64 @@
 	<button type="submit" class="btn btn-primary">Вход</button>
 	<a href="/Guest" class="btn btn-secondary">Войти как Гость</a>
 </form>
+
+<div class="slider-container">
+    <!-- Лента с картинками -->
+    <div class="slider-track" id="sliderTrack">
+        <img src="/images/slide1.jpg" alt="Слайд 1" class="slider-img">
+        <img src="/images/slide2.jpg" alt="Слайд 2" class="slider-img">
+        <img src="/images/slide3.jpg" alt="Слайд 3" class="slider-img">
+        <img src="/images/slide4.jpg" alt="Слайд 4" class="slider-img">
+    </div>
+    
+    <!-- Кнопки управления -->
+    <button class="slider-btn prev" onclick="moveSlide(-1)">&#10094;</button>
+    <button class="slider-btn next" onclick="moveSlide(1)">&#10095;</button>
+</div>
+
+        <script>
+    let currentSlide = 0;
+    const track = document.getElementById('sliderTrack');
+    const totalSlides = document.querySelectorAll('.slider-img').length;
+    let slideInterval;
+
+    // Функция сдвига ленты
+    function updateSlide() {
+        // Сдвигаем ленту влево на 100% для каждой картинки
+        track.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+
+    // Функция для кнопок
+    function moveSlide(direction) {
+        currentSlide += direction;
+        
+        // Если дошли до конца, возвращаемся в начало
+        if (currentSlide >= totalSlides) currentSlide = 0;
+        // Если нажали назад с первого, переходим в конец
+        if (currentSlide < 0) currentSlide = totalSlides - 1;
+        
+        updateSlide();
+        resetInterval(); // Сбрасываем таймер, чтобы при клике картинка не сменилась сразу же
+    }
+
+    // Автоматическая смена каждые 3 секунды (3000 мс)
+    function startInterval() {
+        slideInterval = setInterval(() => {
+            currentSlide++;
+            if (currentSlide >= totalSlides) currentSlide = 0;
+            updateSlide();
+        }, 3000);
+    }
+
+    function resetInterval() {
+        clearInterval(slideInterval);
+        startInterval();
+    }
+
+    // Запускаем таймер при загрузке страницы
+    document.addEventListener('DOMContentLoaded', () => {
+        if (track) {
+            startInterval();
+        }
+    });
+</script>
