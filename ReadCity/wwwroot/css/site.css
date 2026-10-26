@@ -1,0 +1,77 @@
+/* =========================================
+   1. Глобальный шрифт
+   ========================================= */
+body, button, input, select, textarea {
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
+
+/* =========================================
+   2. Главные CRUD-кнопки (Акцентный цвет)
+   ========================================= */
+.btn-primary,
+.btn-success,
+.btn-warning {
+    background-color: #546F94;
+    border-color: #546F94;
+    color: #ffffff; /* Обязательно белый текст */
+}
+
+    /* Эффект при наведении и клике */
+    .btn-primary:hover,
+    .btn-success:hover,
+    .btn-warning:hover,
+    .btn-primary:focus,
+    .btn-success:focus,
+    .btn-warning:focus,
+    .btn-primary:active,
+    .btn-success:active,
+    .btn-warning:active {
+        background-color: #435976; /* Темнее основного */
+        border-color: #435976;
+        color: #ffffff;
+    }
+
+/* =========================================
+   3. Навигационная панель (Шапка)
+   ========================================= */
+.navbar {
+    background-color: #ABCFCE;
+}
+
+    /* Делаем текст в шапке темным, чтобы читался на светлом фоне */
+    .navbar .navbar-brand,
+    .navbar span,
+    .navbar a:not(.btn) {
+        color: #333333;
+    }
+
+/* =========================================
+   4. Панель фильтров (на странице товаров)
+   ========================================= */
+.filter-panel {
+    background-color: #ABCFCE;
+    padding: 12px;
+    border-radius: 6px;
+}
+
+/* =========================================
+   Дефолтные стили шаблона (можно оставить)
+   ========================================= */
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}

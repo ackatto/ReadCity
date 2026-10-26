@@ -1,0 +1,20 @@
+﻿@page
+@model ReadCity.Pages.OrderDeleteModel
+@{
+	ViewData["Title"] = "Удаление";
+}
+<h2>Удаление заявки</h2>
+@if(Model.Error!=null)
+{
+	<div class="alert alert-danger"><strong>@Model.Error</strong></div>
+	<a href="/Orders" class="btn btn-secondary">Назад</a>
+}
+else
+{
+	<p>Удалить заказ с артикулом <strong>@Model.OrderArticle</strong>?</p>
+	<form method="post">
+		<input type="hidden" name="id" value="@Model.OrderId"/>
+		<button type="submit" class="btn btn-danger mb-2">Удалить</button>
+		<a href="/Orders" class="btn btn-secondary">Отмена</a>
+	</form>
+}

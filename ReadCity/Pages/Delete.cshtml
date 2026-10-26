@@ -1,0 +1,21 @@
+﻿@page
+@model ReadCity.Pages.DeleteModel
+@{
+	ViewData["Title"] = "Удаление";
+	
+}
+<h2>Удаление товара</h2>
+@if(Model.Error!=null)
+{
+	<div class="alert alert-danger">@Model.Error</div>
+	<a href="/Products" class="btn btn-secondary">Назад</a>
+}
+else
+{
+	<p>Удалить <strong>@Model.BookName</strong>?</p>
+	<form method="post">
+		<input type="hidden" name="id" value="@Model.ProductId"/>
+		<button type="submit" class="btn btn-danger">Удалить</button>
+		<a href="/Products" class="btn btn-secondary">Отмена</a>
+	</form>
+}

@@ -1,0 +1,53 @@
+﻿    <!DOCTYPE html>
+    <html lang="ru">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - Книжный магазин</title>
+        <link rel="icon" type="image/x-icon" href="~/images/icon.ico" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </head>
+    <body>   
+        <!-- Добавили navbar-expand-lg -->
+<nav class="navbar navbar-light navbar-expand-lg px-3 mb-4">
+    
+    <!-- Логотип -->
+    <a class="navbar-brand d-flex align-items-center" href="/Products">
+        <img src="~/images/icon1.png" alt="Логотип" style="height:20px; width:auto; margin-right:10px;" />
+        <!-- Скрываем текст на мобилке, чтобы не мешал -->
+        <span class="d-none d-lg-block">Книжный магазин</span>
+    </a>
+
+    <!-- Кнопка Бургер (видна только на мобилке) -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Контент, который будет прятаться в бургер на телефоне -->
+    <div class="collapse navbar-collapse" id="navbarContent">
+        <!-- ms-auto прижимает блок кнопок вправо -->
+        <div class="d-flex align-items-center ms-auto mt-2 mt-lg-0">
+            @if(Context.Session.GetString("FullName")!=null)
+            {
+                <span class="me-3">@Context.Session.GetString("FullName")</span>
+                @if(Context.Session.GetString("Role")=="Администратор" || Context.Session.GetString("Role")=="Менеджер")
+                {
+                    <a href="/Orders" class="btn btn-info btn-sm me-1">Заказы</a>
+                }
+                <a href="/Logout" class="btn btn-light btn-sm">Выход</a>
+            }
+        </div>
+    </div>
+</nav>
+    
+        <div class="container">        
+                @RenderBody()
+      
+        </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    </body>
+    </html>

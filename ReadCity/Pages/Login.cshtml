@@ -1,0 +1,13 @@
+﻿@page
+@model ReadCity.Pages.LoginModel
+@{
+	ViewData["Title"] = "Авторизация";
+}
+<h2>Вход в систему</h2>
+<form method="post" style="max-width:400px">
+	<input asp-for="Login" class="form-control mb-2" placeholder="Логин" required/>
+	<input asp-for="Password" type="password" class="form-control mb-2" placeholder="Пароль" required/>
+	<div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+	<button type="submit" class="btn btn-primary">Вход</button>
+	<a href="/Guest" class="btn btn-secondary">Войти как Гость</a>
+</form>

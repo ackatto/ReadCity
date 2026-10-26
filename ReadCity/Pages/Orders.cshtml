@@ -1,0 +1,33 @@
+﻿@page
+@model ReadCity.Pages.OrdersModel
+@{
+	ViewData["Title"] = "Заявки";
+}
+<h2>Список заявок</h2>
+
+@if(Model.IsAdmin)
+{		
+	<a href="/Order" class="btn btn-success mb-3">Добавить заказ</a>
+}
+
+@foreach(var o in Model.Orders)
+{
+	<div class="row border g-0 mb-2">
+		<div class="col-md-9 p-2 border-end">
+			<div><strong>Артикул заказа: @o.Id</strong></div>
+			<div>Статус заказа: @o.Status</div>
+			<div>Адрес пункта выдачи: @o.PickupPointName</div>
+			<div>Дата заказа: @DateTime.Parse(o.OrderDate).ToString("dd.MM.yyyy")</div>
+		</div>
+		<div class="col-md-3 p-2">
+			<div class="mb-2">Дата доставки: @DateTime.Parse(o.DeliveryDate).ToString("dd.MM.yyyy")</div>
+			@if(Model.IsAdmin)
+			{
+				<div class="d-flex gap-2">
+					<a href="/Order?id=@o.Id" class="btn btn-warning btn-sm">Ред.</a>
+					<a href="/DeleteOrder?id=@o.Id" class="btn btn-danger btn-sm">Удал.</a>
+				</div>
+			}
+		</div>
+	</div>
+}

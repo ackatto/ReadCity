@@ -1,0 +1,51 @@
+﻿@page
+@model ReadCity.Pages.OrderModel
+@{
+	ViewData["Title"] = Model.IsEdit ? "Редактирование" : "Добавление";
+}
+<h2>@(Model.IsEdit ? "Редактирование" : "Добавление") заявки</h2>
+<form method="post">
+<input asp-for="Item.Id" type="hidden" />
+@if(Model.IsEdit)
+{
+	<div><strong>Артикул заказа: @Model.Item.Id</strong></div>
+}
+<label>Статус заказа: </label>
+<select asp-for="Item.Status" class="form-select mb-2" required>
+<option value="Новый">Новый</option>
+<option value="Завершен">Завершен</option>
+</select>
+<label>Адрес пункта выдачи: </label>
+<select asp-for="Item.PickupPointId" asp-items="@Model.PickupPoints" class="form-select mb-2">
+</select>
+
+<label>Дата доставки:</label>
+<input asp-for="Item.DeliveryDate" type="date" class="form-control mb-2" required/>
+
+<button type="submit" class="btn btn-primary">Сохранить</button>
+<a href="/Orders" class="btn btn-secondary">Отмена</a>
+</form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let isEditing = localStorage.getItem('isEditing');
+
+        if (isEditing === 'true') {
+            alert("Вы уже открыли окно редактирования. Пожалуйста, закройте его, прежде чем открывать новое.");
+            window.location.href = '/Orders'; // <--- Тут поменяли на /Orders
+        } else {
+            localStorage.setItem('isEditing', 'true');
+        }
+
+        window.addEventListener('beforeunload', function () {
+            localStorage.removeItem('isEditing');
+        });
+
+        const form = document.querySelector('form');
+        if (form) {
+            form.addEventListener('submit', function () {
+                localStorage.removeItem('isEditing');
+            });
+        }
+    });
+</script>

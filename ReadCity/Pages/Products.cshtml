@@ -1,0 +1,99 @@
+﻿@page
+@model ReadCity.Pages.ProductsModel
+@{
+	ViewData["Title"] = "Книги";
+}
+<h2>Коллекция книг</h2>
+@if(Model.IsManager)
+{
+	<form method="get" class="row g-2 mb-3 filter-panel">
+		<div class="col-md-2">
+			<input name="search" value="@Model.Search" class="form-control" placeholder="Поиск..." onchange="this.form.submit()"/>
+		</div>
+		<div class="col-md-3">
+			<select name="discountRange" class="form-select" onchange="this.form.submit()">
+				<option value="">Все диапазоны</option>			
+					<option value="0-12" selected="@(Model.DiscountRange=="0-12")">0-12,99%</option>
+					<option value="13-16" selected="@(Model.DiscountRange=="13-16")">13-16,99%</option>
+					<option value="17+" selected="@(Model.DiscountRange=="17+")">Больше 17%</option>
+			</select>
+		</div>
+		<div class="col-md-3">
+			<select name="sortColumn" class="form-select" onchange="this.form.submit()">				
+				<option value="p.Price" selected="@(Model.SortColumn=="p.Price")">Цена</option>
+				<option value="p.StockQuantity" selected="@(Model.SortColumn=="p.StockQuantity")">Кол-во на складе</option>
+			</select>
+		</div>
+		<div class="col-md-4">
+			<select name="sortDirection" class="form-select" onchange="this.form.submit()">				
+				<option value="ASC" selected="@(Model.SortDirection=="ASC")">По возрастанию</option>
+				<option value="DESC" selected="@(Model.SortDirection=="DESC")">По убыванию</option>
+			</select>
+		</div>
+	</form>
+	@if(Model.currentPage>1)
+	{
+	<div class="mt-3">
+		<a href="?pageNumber=@(Model.currentPage-1)&@Model.Search&@Model.DiscountRange&@Model.SortColumn&@Model.SortDirection" class="btn btn-secondary btn-sm">Назад</a>
+	</div>
+	}
+	<div>
+		<span class="btn btn-sedondary disable">Страница @Model.currentPage</span>
+	</div>
+	if(Model.currentPage<2)
+	{
+		<a href="?pageNumber=@(Model.currentPage+1)&@Model.Search&@Model.DiscountRange&@Model.SortColumn&@Model.SortDirection" class="btn btn-secondary btn-sm">Вперед</a>
+	}
+}
+@if(Model.IsAdmin)
+{
+	<a href="/Product" class="btn btn-success mb-3">Добавить товар</a>
+}
+	@foreach(var p in Model.Products)
+	{
+		var bg = p.StockQuantity==0 ? "gray" : (p.Discount>25 ? "#23E1EF" : "");
+		<div class="row border g-0" style="background-color: @bg">
+			<div class="col-md-2 p-2 border-end">
+				<img src="@(string.IsNullOrEmpty(p.ImagePath) ? "/images/picture.png" : p.ImagePath)" 
+				class="w-100"
+				style="height:200px; object-fit:contain;"/>
+			</div>
+			<div class="col-md p-2 border-end">
+				<div class="mb-2">
+					<strong>@p.CategoryName | @p.BookName</strong>
+				</div>
+					
+				<div>Описание товара: @p.Description</div>
+				<div>Производитель: @p.ManufacturerName</div>
+				<div>Поставщик: @p.SupplierName</div>
+				<div>Цена:
+					@if(p.Discount>0)
+					{
+						<span style="color:red; text-decoration: line-through">@p.Price.ToString("F2") руб.</span>
+						<span class="ms-2">@((p.Price * (1 - p.Discount / 100)).ToString("F2")) руб.</span>
+					}
+					else
+					{
+						<span>@p.Price.ToString("F2") руб.</span>
+					}
+				</div>
+				<div>Единица измерения: @p.Unit</div>
+				<div>Количество на складе: @p.StockQuantity</div>
+			</div>
+			<div class="col-md-2 p-2 border-end d-flex align-items-center justify-content-center text-center">
+				<div>
+					Действующая скидка<br/>
+					<strong>@p.Discount%</strong>
+				</div>				
+			</div>
+			@if(Model.IsAdmin)
+			{
+				<div class="col-md-2 p-2 d-flex flex-column justify-content-center">
+					<a href="/Product?id=@p.Id" class="btn btn-warning btn-sm mb-2">Ред.</a>
+					<a href="/Delete?id=@p.Id" class="btn btn-danger btn-sm mb-2">X</a>
+				</div>
+			}
+		</div>
+	
+	}
+	
